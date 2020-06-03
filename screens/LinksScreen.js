@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, Text,Button  } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 
 export default function LinksScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <OptionButton
+      {/* <OptionButton
         icon="md-school"
         label="Read the Expo documentation"
         onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
@@ -24,7 +24,39 @@ export default function LinksScreen() {
         label="Ask a question on the forums"
         onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
         isLastOption
+      /> */}
+
+      <TextInput
+      placeholder="Pedido"
+      style={styles.textInputStyle}
       />
+
+      <TextInput
+      placeholder="Nome do cliente"
+      style={styles.textInputStyle}
+      />
+
+      <TextInput
+      placeholder="Valor do pedido"
+      style={styles.textInputStyle}
+      />
+
+      <TextInput
+      placeholder="Descrição do pedido"
+      style={styles.textInputStyleMulti}
+      multiline={true}
+      />
+
+      <TouchableOpacity
+      style={styles.button}>
+      <Text style={styles.buttonText}>Salvar Pedido</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+      style={styles.button}>
+      <Text style={styles.buttonText}>Voltar</Text>
+      </TouchableOpacity>    
+
     </ScrollView>
   );
 }
@@ -51,24 +83,42 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
   },
-  optionIconContainer: {
-    marginRight: 12,
+  textInputStyle: {
+    textAlign: 'left',
+    width: '100%',
+    paddingLeft:8,
+    borderWidth: 1,
+    borderColor: 'black',
+    fontSize: 23,
+    marginBottom: 8
   },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
+  textInputStyleMulti: {
+    textAlignVertical:'top',
+    width: '100%',
+    paddingLeft: 8,
+    height:150,
+    borderWidth: 1,
+    borderColor: 'black',
+    fontSize: 20,
   },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  button: {
+    width: '100%',
+    height: 40,
+    padding: 10,
+    backgroundColor: 'black',
+    marginTop: 10,
   },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
+  buttonText: {
+    textAlign: 'center',
+    color: 'white',
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 30,
   },
 });
+
