@@ -3,9 +3,15 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, Text,Button  } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { pedidoAddStart } from "../redux/pedido/pedido.actions";
 
-export default function LinksScreen() {
-  return (
+
+class LinksScreen extends React.Component{
+  render() {
+
+    const { pedidoAddStart } = this.props;
+    return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       {/* <OptionButton
         icon="md-school"
@@ -52,13 +58,15 @@ export default function LinksScreen() {
       <Text style={styles.buttonText}>Salvar Pedido</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
+      <TouchableOpacity    
+      onPress={pedidoAddStart}
       style={styles.button}>
       <Text style={styles.buttonText}>Voltar</Text>
       </TouchableOpacity>    
 
     </ScrollView>
   );
+  }
 }
 
 function OptionButton({ icon, label, onPress, isLastOption }) {
@@ -122,3 +130,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapDispatchToProps = dispatch =>({
+  pedidoAddStart : () => dispatch(pedidoAddStart({nome: 'zé', pedido: 'uma moto'}))
+})
+
+export default connect(null, mapDispatchToProps)(LinksScreen)
