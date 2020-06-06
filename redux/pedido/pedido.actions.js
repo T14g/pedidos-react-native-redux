@@ -10,6 +10,11 @@ export const pedidoAddSuccess = pedidos => ({
     payload: pedidos
 });
 
+export const getTotalPedidos = (total) => ({
+    type: 'GET_TOTAL_PEDIDOS',
+    payload: total
+});
+
 export const pedidoAddFail = error => ({
     type: 'PEDIDO_ADD_FAIL',
     payload: error

@@ -31,6 +31,11 @@ const pedidoReducer = (state = INITIAL_STATE, action) => {
                 total: 0,
                 pedidos: []
             }
+        case 'GET_TOTAL_PEDIDOS':
+            return {
+                ...state,
+                total: action.payload
+            }
         
         case 'PEDIDO_FETCH_FAIL':
             return {

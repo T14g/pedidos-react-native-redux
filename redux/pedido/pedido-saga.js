@@ -1,14 +1,19 @@
 import { delay, takeEvery , put, all, call, takeLatest } from 'redux-saga/effects';
 import PedidoActionTypes from './pedido.types';
-import { pedidoAddSuccess, pedidoAddFail, pedidosFetchSuccess, pedidosFetchFail } from './pedido.actions';
+import { pedidoAddSuccess, pedidoAddFail, pedidosFetchSuccess, pedidosFetchFail, getTotalPedidos } from './pedido.actions';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
+export function* deleteAll() {
+  try{
+    yield AsyncStorage.setItem('pedidos', JSON.stringify([]));
+  }catch(error) {
+    console.log(error);
+  }
+}
  
 export function* addPedido(action) {
     const { payload } = action;
-
-
     try{
         var ar = [];
 
@@ -31,7 +36,6 @@ export function* addPedido(action) {
             }
           )
 
-          // console.log(payload);
           yield put(pedidoAddSuccess(payload));
     }catch{
         yield put(pedidoAddFail(error));
@@ -47,10 +51,17 @@ export function* fetchPedidos() {
     let pedidos = yield AsyncStorage.getItem('pedidos');
     pedidos = JSON.parse(pedidos);
     yield put(pedidosFetchSuccess(pedidos));
+
+    let total = (pedidos.length) ? (pedidos.length) : 0;  
+    yield put(getTotalPedidos(total))
     
   }catch{
     yield put(pedidosFetchFail(error));
   }
+}
+
+export function* deleteAllPedidos() {
+  yield takeLatest('DELETE_ALL_PEDIDOS', deleteAll);
 }
 
 export function* pedidoAddStart() {
@@ -62,5 +73,5 @@ export function* pedidosFetchtart() {
 }
 
 export function* pedidoSagas() {
-    yield all([call(pedidoAddStart), call(pedidosFetchtart)])
+    yield all([call(pedidoAddStart), call(pedidosFetchtart), call(deleteAllPedidos)])
 }

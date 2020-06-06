@@ -24,8 +24,8 @@ class HomeScreen extends React.Component {
         {
           pedidos.map(p => {
             return (
-            <View style={styles.welcomeContainer}>
-              <Text>Id:{p.id} |Cliente : {p.nome} | Pedido: {p.pedido}| Valor: {p.valor}</Text>
+            <View key={p.id} style={styles.welcomeContainer}>
+              <Text>Id:{p.id} |Cliente :{p.nome} | Pedido: {p.pedido}| Valor: {p.valor}</Text>
               <Text>Descrição: {p.descr}</Text>
             </View>
             )
