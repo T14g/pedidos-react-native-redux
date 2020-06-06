@@ -4,6 +4,7 @@ import * as React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import MasterScreen from '../screens/MasterScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -32,6 +33,15 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
         }}
       />
+
+      <BottomTab.Screen
+        name="Master"
+        component={MasterScreen}
+        options={{
+          title: 'Master',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -44,5 +54,7 @@ function getHeaderTitle(route) {
       return 'Lista de pedidos';
     case 'Links':
       return 'Adicione um pedido';
+    case 'Master':
+      return 'Master config';
   }
 }

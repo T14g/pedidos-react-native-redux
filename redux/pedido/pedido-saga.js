@@ -8,10 +8,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 export function* addPedido(action) {
     const { payload } = action;
 
+
     try{
         var ar = [];
 
-        AsyncStorage.getItem('pedidos').then(
+        yield AsyncStorage.getItem('pedidos').then(
             pedidos => {
               if(pedidos){
                 console.log(pedidos)
@@ -30,6 +31,7 @@ export function* addPedido(action) {
             }
           )
 
+          // console.log(payload);
           yield put(pedidoAddSuccess(payload));
     }catch{
         yield put(pedidoAddFail(error));

@@ -16,10 +16,23 @@ class HomeScreen extends React.Component {
   }
 
   render(){
+    let { pedidos } = this.props;
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
+
+        {
+          pedidos.map(p => {
+            return (
+            <View style={styles.welcomeContainer}>
+              <Text>Id:{p.id} |Cliente : {p.nome} | Pedido: {p.pedido}| Valor: {p.valor}</Text>
+              <Text>Descrição: {p.descr}</Text>
+            </View>
+            )
+          })
+        }
+
+        {/* <View style={styles.welcomeContainer}>
           <Image
             source={
               __DEV__
@@ -48,16 +61,10 @@ class HomeScreen extends React.Component {
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
             <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
+
+
       </ScrollView>
-
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-        <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
-        </View>
-      </View>
     </View>
   );
 }

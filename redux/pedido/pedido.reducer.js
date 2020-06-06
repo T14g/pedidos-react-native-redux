@@ -2,6 +2,7 @@ import PedidoActionTypes from './pedido.types';
 
 const INITIAL_STATE = {
     pedidos : [],
+    total: 0,
     error: null
 };
 
@@ -12,6 +13,7 @@ const pedidoReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 error: null,
+                total: state.total + 1,
                 pedidos: [...state.pedidos, action.payload]
             }
         
@@ -20,6 +22,14 @@ const pedidoReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 error: null,
                 pedidos : action.payload
+            }
+        
+        case 'DELETE_ALL_PEDIDOS':
+            return {
+                ...state,
+                error: null,
+                total: 0,
+                pedidos: []
             }
         
         case 'PEDIDO_FETCH_FAIL':

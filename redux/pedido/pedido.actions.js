@@ -28,3 +28,7 @@ export const pedidosFetchFail = error =>({
     type: 'PEDIDOS_FETCH_FAIL',
     payload: error
 });
+
+export const deleteAllPedidos = () => ({
+    type: 'DELETE_ALL_PEDIDOS'
+});
