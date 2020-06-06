@@ -17,7 +17,7 @@ export default function App(props) {
   if (!isLoadingComplete) {
     return null;
   } else {
-    return (
+    return ( 
       <Provider store={store}>
           <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}

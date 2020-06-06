@@ -1,11 +1,21 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
+import { connect } from 'react-redux';
+
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MonoText } from '../components/StyledText';
+import { pedidosFetchStart } from '../redux/pedido/pedido.actions';
 
-export default function HomeScreen() {
+class HomeScreen extends React.Component {
+
+  componentDidMount(){
+    const { fetchPedidos } = this.props;
+    fetchPedidos();
+  }
+
+  render(){
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -50,6 +60,7 @@ export default function HomeScreen() {
       </View>
     </View>
   );
+}
 }
 
 HomeScreen.navigationOptions = {
@@ -177,3 +188,13 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
 });
+
+const mapStateToProps = (state) => ({
+  pedidos : state.pedido.pedidos
+});
+
+const  mapDispatchToProps = (dispatch) => ({
+  fetchPedidos : () => dispatch(pedidosFetchStart())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);

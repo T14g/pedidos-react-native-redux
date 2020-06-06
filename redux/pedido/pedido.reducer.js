@@ -8,17 +8,31 @@ const INITIAL_STATE = {
 const pedidoReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'PEDIDO_ADD_SUCCESS':
+ 
             return {
                 ...state,
                 error: null,
-                pedidos: action.payload
+                pedidos: [...state.pedidos, action.payload]
             }
-
-            case PedidoActionTypes.ADD_PEDIDO_FAIL:
+        
+        case 'PEDIDOS_FETCH_SUCCESS':
             return {
                 ...state,
-                error: action.payload
+                error: null,
+                pedidos : action.payload
             }
+        
+        case 'PEDIDO_FETCH_FAIL':
+            return {
+                ...state,
+                error : action.payload
+            }
+
+        case 'ADD_PEDIDO_FAIL':
+        return {
+            ...state,
+            error: action.payload
+        }
         default:
             return state;
     }

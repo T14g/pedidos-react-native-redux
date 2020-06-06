@@ -4,13 +4,13 @@ import * as React from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, Text,Button  } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { pedidoAddStart } from "../redux/pedido/pedido.actions";
+import { pedidoAddStart, pedidosFetchStart } from "../redux/pedido/pedido.actions";
 
 
 class LinksScreen extends React.Component{
   render() {
 
-    const { pedidoAddStart } = this.props;
+    const { pedidoAddStart, pedidoFetch } = this.props;
     return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       {/* <OptionButton
@@ -54,6 +54,7 @@ class LinksScreen extends React.Component{
       />
 
       <TouchableOpacity
+      onPress={pedidoFetch}
       style={styles.button}>
       <Text style={styles.buttonText}>Salvar Pedido</Text>
       </TouchableOpacity>
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch =>({
-  pedidoAddStart : () => dispatch(pedidoAddStart({nome: 'zé', pedido: 'uma moto'}))
+  pedidoAddStart : () => dispatch(pedidoAddStart({nome: 'zé', pedido: 'uma moto'})),
+  pedidoFetch : () => dispatch(pedidosFetchStart())
 })
 
 export default connect(null, mapDispatchToProps)(LinksScreen)
