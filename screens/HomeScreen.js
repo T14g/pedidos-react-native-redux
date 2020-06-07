@@ -17,6 +17,8 @@ class HomeScreen extends React.Component {
 
   render(){
     let { pedidos } = this.props;
+    pedidos = pedidos ? pedidos : [];
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>

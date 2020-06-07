@@ -15,21 +15,18 @@ export function* deleteAll() {
 export function* addPedido(action) {
     const { payload } = action;
     try{
-        var ar = [];
+        let ar = [];
 
         yield AsyncStorage.getItem('pedidos').then(
             pedidos => {
               if(pedidos){
-                console.log(pedidos)
                 ar = JSON.parse(pedidos);
-                p = payload; 
-                ar.push(p);
+                ar.push(payload);
                 AsyncStorage.setItem('pedidos', JSON.stringify(ar));
     
               }else{
-                p = payload;
                 console.log("sem pedidos ainda")
-                ar.push(p);
+                ar.push(payload);
                 AsyncStorage.setItem('pedidos', JSON.stringify(ar));
               }
               
@@ -49,11 +46,15 @@ export function* fetchPedidos() {
 
   try {
     let pedidos = yield AsyncStorage.getItem('pedidos');
-    pedidos = JSON.parse(pedidos);
-    yield put(pedidosFetchSuccess(pedidos));
 
-    let total = (pedidos.length) ? (pedidos.length) : 0;  
-    yield put(getTotalPedidos(total))
+    if(pedidos){
+      pedidos = JSON.parse(pedidos);
+      yield put(pedidosFetchSuccess(pedidos));
+
+      let total = (pedidos.length) ? (pedidos.length) : 0;  
+      yield put(getTotalPedidos(total));
+    }
+    
     
   }catch{
     yield put(pedidosFetchFail(error));
