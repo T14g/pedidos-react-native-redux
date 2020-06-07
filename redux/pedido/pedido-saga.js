@@ -10,15 +10,15 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 export function* getLastIdAsync() {
   try{
     let lastID = yield AsyncStorage.getItem('lastID');
+    lastID = JSON.parse(lastID);
     let id = 0;
 
-    if(lastID !== 'null'){
-      id = JSON.parse(lastID);
-    }
+    if(lastID != 'null'){
+      id = lastID; 
+    } 
 
     yield put(setLastID(id));  
     
@@ -30,12 +30,59 @@ export function* getLastIdAsync() {
 export function* deleteAll() {
   try{
     yield AsyncStorage.setItem('pedidos', JSON.stringify([]));
-    yield AsyncStorage.setItem('lastID', JSON.stringify('null'));
+    yield AsyncStorage.setItem('lastID', 'null');
     yield put(setLastID(0));
   }catch(error) {
     console.log(error);
   }
 }
+
+export function* deleteById(action) {
+  const { payload } = action;
+  let newAr = [];
+
+  try{
+    yield AsyncStorage.getItem('pedidos').then(
+          pedidos => {
+            console.log("testando")
+            if(pedidos){
+              console.log("deletando")
+              ar = JSON.parse(pedidos);
+              newAr = ar.filter(a => a.id!== payload);
+
+              AsyncStorage.setItem('pedidos', JSON.stringify(newAr));
+              
+            }
+          }
+        )
+
+        yield put(pedidosFetchSuccess(newAr));
+    }catch(error){
+      console.log(error);
+    }
+      
+}
+
+// export function* deletePedidoByID(action){
+//   const { payload } = action;
+//   console.log("OOWOWOWOWOW");
+
+//   yield AsyncStorage.getItem('pedidos').then(
+//     pedidos => {
+//       console.log("testando")
+//       if(pedidos){
+//         console.log("deletando")
+//         ar = JSON.parse(pedidos);
+//         let newAr = ar.filter(a.id!== payload);
+
+//         console.log(newAr);
+        
+//         // AsyncStorage.setItem('pedidos', JSON.stringify(ar));
+//       }
+      
+//     }
+//   )
+// }
  
 export function* addPedido(action) {
     const { payload } = action;
@@ -105,6 +152,16 @@ export function* getLastID() {
   yield takeLatest('GET_LAST_ID', getLastIdAsync);
 }
 
+export function* deletePedido() {
+  yield takeEvery('DELETE_PEDIDO', deleteById);
+}
+
 export function* pedidoSagas() {
-    yield all([call(pedidoAddStart), call(pedidosFetchtart), call(deleteAllPedidos), call(getLastID)])
+    yield all([
+      call(pedidoAddStart), 
+      call(pedidosFetchtart), 
+      call(deleteAllPedidos), 
+      call(getLastID),
+      call(deletePedido)
+    ])
 }

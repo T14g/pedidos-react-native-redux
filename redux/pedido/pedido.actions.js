@@ -24,6 +24,11 @@ export const setLastID = id => ({
     payload: id
 });
 
+export const deletePedido = id => ({
+    type: 'DELETE_PEDIDO',
+    payload: id
+});
+
 export const pedidoAddFail = error => ({
     type: 'PEDIDO_ADD_FAIL',
     payload: error

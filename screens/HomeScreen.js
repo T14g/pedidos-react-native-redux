@@ -6,7 +6,7 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MonoText } from '../components/StyledText';
-import { pedidosFetchStart, getLastID } from '../redux/pedido/pedido.actions';
+import { pedidosFetchStart, getLastID, deletePedido } from '../redux/pedido/pedido.actions';
 // import { getLastID } from '../redux/pedido/pedido-saga';
 
 class HomeScreen extends React.Component {
@@ -14,10 +14,11 @@ class HomeScreen extends React.Component {
   componentDidMount(){
     const { fetchPedidos, getLastID } = this.props;
     getLastID();
+    fetchPedidos();
   }
 
   render(){
-    let { pedidos } = this.props;
+    let { pedidos, deletePedidoByID } = this.props;
     pedidos = pedidos ? pedidos : [];
 
   return (
@@ -26,10 +27,17 @@ class HomeScreen extends React.Component {
 
         {
           pedidos.map(p => {
+            let { id, nome , pedido, valor,descr } = p;
             return (
-            <View key={p.id} style={styles.welcomeContainer}>
-              <Text>Id:{p.id} |Cliente :{p.nome} | Pedido: {p.pedido}| Valor: {p.valor}</Text>
-              <Text>Descrição: {p.descr}</Text>
+            <View key={id} style={styles.welcomeContainer}>
+              <Text>Id:{id} |Cliente :{nome} | Pedido: {pedido}| Valor: {valor}</Text>
+              <Text>Descrição: {descr}</Text>
+              <TouchableOpacity  
+              onPress={(idPedido) => deletePedidoByID(id)}
+              style={styles.helpLink}
+              >
+                <Text style={styles.helpLinkText}>DELETE</Text>
+              </TouchableOpacity>
             </View>
             )
           })
@@ -205,7 +213,8 @@ const mapStateToProps = (state) => ({
 
 const  mapDispatchToProps = (dispatch) => ({
   fetchPedidos : () => dispatch(pedidosFetchStart()),
-  getLastID : () => dispatch(getLastID())
+  getLastID : () => dispatch(getLastID()),
+  deletePedidoByID : (id) => dispatch(deletePedido(id))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
