@@ -6,13 +6,14 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MonoText } from '../components/StyledText';
-import { pedidosFetchStart } from '../redux/pedido/pedido.actions';
+import { pedidosFetchStart, getLastID } from '../redux/pedido/pedido.actions';
+// import { getLastID } from '../redux/pedido/pedido-saga';
 
 class HomeScreen extends React.Component {
 
   componentDidMount(){
-    const { fetchPedidos } = this.props;
-    fetchPedidos();
+    const { fetchPedidos, getLastID } = this.props;
+    getLastID();
   }
 
   render(){
@@ -203,7 +204,8 @@ const mapStateToProps = (state) => ({
 });
 
 const  mapDispatchToProps = (dispatch) => ({
-  fetchPedidos : () => dispatch(pedidosFetchStart())
+  fetchPedidos : () => dispatch(pedidosFetchStart()),
+  getLastID : () => dispatch(getLastID())
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);

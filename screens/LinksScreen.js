@@ -12,9 +12,9 @@ class LinksScreen extends React.Component{
   state = { inputPedido: '', inputCliente: '', inputValor: '', inputDescr: '' };
 
   handleSave = () => {
-    const { pedidoAddStart, total } = this.props;
+    const { pedidoAddStart, lastID } = this.props;
     const { inputPedido, inputCliente, inputValor, inputDescr } = this.state;
-    const pedido = {id: total +1 , nome: inputCliente, pedido: inputPedido, valor: inputValor, descr: inputDescr};
+    const pedido = {id: lastID +1 , nome: inputCliente, pedido: inputPedido, valor: inputValor, descr: inputDescr};
    
     
     if(inputCliente && inputPedido && inputValor && inputDescr){
@@ -154,7 +154,8 @@ const mapDispatchToProps = dispatch =>({
 });
 
 const mapStateToProps = (state) => ({
-  total: state.pedido.total
+  total: state.pedido.total,
+  lastID: state.pedido.lastID
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LinksScreen)

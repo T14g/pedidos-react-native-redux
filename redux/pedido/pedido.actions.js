@@ -15,6 +15,15 @@ export const getTotalPedidos = (total) => ({
     payload: total
 });
 
+export const getLastID = () => ({
+    type: 'GET_LAST_ID'
+});
+
+export const setLastID = id => ({
+    type: 'SET_LAST_ID',
+    payload: id
+});
+
 export const pedidoAddFail = error => ({
     type: 'PEDIDO_ADD_FAIL',
     payload: error

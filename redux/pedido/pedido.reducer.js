@@ -3,18 +3,24 @@ import PedidoActionTypes from './pedido.types';
 const INITIAL_STATE = {
     pedidos : [],
     total: 0,
-    error: null
+    error: null,
+    lastID: 0,
 };
 
 const pedidoReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'PEDIDO_ADD_SUCCESS':
- 
             return {
                 ...state,
                 error: null,
                 total: state.total + 1,
                 pedidos: [...state.pedidos, action.payload]
+        }
+
+        case 'SET_LAST_ID':
+            return{
+                ...state,
+                lastID: action.payload
             }
         
         case 'PEDIDOS_FETCH_SUCCESS':
