@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import AddScreen from '../screens/AddScreen';
 import MasterScreen from '../screens/MasterScreen';
 
 const BottomTab = createBottomTabNavigator();
@@ -26,8 +26,8 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Add"
+        component={AddScreen}
         options={{
           title: 'Adicionar',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
@@ -52,7 +52,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Lista de pedidos';
-    case 'Links':
+    case 'Add':
       return 'Adicione um pedido';
     case 'Master':
       return 'Master config';

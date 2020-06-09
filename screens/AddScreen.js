@@ -5,16 +5,22 @@ import { StyleSheet, TextInput, TouchableOpacity, Text,Button  } from 'react-nat
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { pedidoAddStart, pedidosFetchStart } from "../redux/pedido/pedido.actions";
+// import { useNavigation } from '@react-navigation/native';
+
+// const goEdit = () => {
+//   const navigation = useNavigation();
+//   navigation.navigate('home');
+// }
 
 
-class LinksScreen extends React.Component{
+class AddScreen extends React.Component{
 
   state = { inputPedido: '', inputCliente: '', inputValor: '', inputDescr: '' };
 
   handleSave = () => {
     const { pedidoAddStart, lastID } = this.props;
     const { inputPedido, inputCliente, inputValor, inputDescr } = this.state;
-    const pedido = {id: lastID +1 , nome: inputCliente, pedido: inputPedido, valor: inputValor, descr: inputDescr};
+    const pedido = {id: lastID +1 ,status: 'pendente', nome: inputCliente, pedido: inputPedido, valor: inputValor, descr: inputDescr};
    
     
     if(inputCliente && inputPedido && inputValor && inputDescr){
@@ -25,34 +31,15 @@ class LinksScreen extends React.Component{
       alert("Preencha todos os campos!");
     }
 
-    }
+    } 
   
 
   render() { 
     const { inputPedido, inputCliente, inputValor, inputDescr } = this.state;
     const { pedidoAddStart, pedidoFetch } = this.props;
-
+   
     return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text>{this.state.teste}</Text>
-      {/* <OptionButton
-        icon="md-school"
-        label="Read the Expo documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
-      />
-
-      <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
-      />
-
-      <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
-        isLastOption
-      /> */}
 
       <TextInput
       placeholder="Pedido"
@@ -89,11 +76,7 @@ class LinksScreen extends React.Component{
       <Text style={styles.buttonText}>Salvar Pedido</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity    
-      onPress={pedidoAddStart}
-      style={styles.button}>
-      <Text style={styles.buttonText}>Voltar</Text>
-      </TouchableOpacity>    
+          
 
     </ScrollView>
   );
@@ -158,4 +141,4 @@ const mapStateToProps = (state) => ({
   lastID: state.pedido.lastID
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LinksScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(AddScreen)

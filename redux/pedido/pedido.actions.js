@@ -15,6 +15,11 @@ export const getTotalPedidos = (total) => ({
     payload: total
 });
 
+export const updatePedido = id => ({
+    type: 'UPDATE_PEDIDO',
+    payload: id
+})
+
 export const getLastID = () => ({
     type: 'GET_LAST_ID'
 });
