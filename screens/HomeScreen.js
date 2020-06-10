@@ -37,25 +37,56 @@ class HomeScreen extends React.Component {
 
         {
           pedidos.map(p => {
-            let { id, nome , pedido, valor,descr } = p;
+            let { id, nome , pedido, valor,descr, status } = p;
             return (
             <View key={id} style={styles.pedidoContainer}>
-              <Text>Id:{id} |Cliente :{nome} | Pedido: {pedido}| Valor: {valor}</Text>
-              <Text>Descrição: {descr}</Text>
+              {/* <Text>Id:{id} |Cliente :{nome} | Pedido: {pedido}| Valor: {valor}</Text>
+              <Text>Descrição: {descr}</Text> */}
 
-              <TouchableOpacity  
-              onPress={() => this.startEditing(p)}
-              style={styles.helpLink}
-              >
-                <Text style={styles.helpLinkText}>EDIT</Text>
-              </TouchableOpacity>
+            <View style={styles.twoColRow}>
+              <View style={styles.col50}>
+                <Text>Pedido:{pedido}</Text>
+              </View>
 
-              <TouchableOpacity  
-              onPress={() => deletePedidoByID(id)}
-              style={styles.helpLink}
-              >
-                <Text style={styles.helpLinkText}>DELETE</Text>
-              </TouchableOpacity>
+              <View style={styles.col50}>
+                <Text>Cliente:{nome}</Text>
+              </View>
+            </View>  
+
+            <View style={styles.twoColRow}>
+              <View style={styles.col50}>
+                <Text>Valor:{valor} </Text>
+              </View>
+
+              <View style={styles.col50}>
+                <Text style={{fontWeight: 'bold', textTransform: 'uppercase',color: `${status == 'pendente' ? 'red' : 'green'}`}}>
+                  Status:{status}
+                </Text>
+              </View>
+            </View>  
+
+            <View styles={styles.pedidoDescBox}>
+              <Text style={styles.pedidoTEXT}>{descr}</Text>
+            </View>  
+
+            <View style={styles.twoColRow}>
+              <View style={styles.col50}>
+                <TouchableOpacity  
+                onPress={() => this.startEditing(p)}
+                style={styles.button2}
+                >
+                  <Text style={styles.buttonText2}>EDIT</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.col50}>
+                <TouchableOpacity  
+                onPress={() => deletePedidoByID(id)}
+                style={styles.redBtn}
+                >
+                  <Text style={styles.buttonText2}>DELETE</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
             </View>
             )
           })
@@ -137,13 +168,8 @@ const styles = StyleSheet.create({
   },
   pedidoContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
+    margin: 5,
+    borderWidth: 2,
   },
   welcomeImage: {
     width: 100,
@@ -255,6 +281,27 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
   },
+  twoColRow: {
+    flex:1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center'
+  },
+  col50:{
+    width: '50%'
+  },
+  redBtn: {
+    backgroundColor: 'red',
+    width: '100%',
+    height: 40,
+    padding: 10,
+    marginTop: 10,
+  },
+  pedidoTEXT: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    fontSize: 25
+  }
 });
 
 const mapStateToProps = (state) => ({
