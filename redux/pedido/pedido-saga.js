@@ -90,8 +90,36 @@ export function* deleteById(action) {
         yield put(pedidosFetchSuccess(newAr));
     }catch(error){
       console.log(error);
+    }     
+}
+
+export function* setPedidoOkById(action) {
+  const { payload } = action;
+  let newAr = [];
+
+  try{
+    yield AsyncStorage.getItem('pedidos').then(
+          pedidos => {
+            if(pedidos){
+              let ar = JSON.parse(pedidos);
+              newAr = ar.map(a => {
+                if(a.id == payload){
+                  return {...a, status: 'ok'};
+                }else{
+                  return a;
+                }
+              })
+
+              AsyncStorage.setItem('pedidos', JSON.stringify(newAr));
+              
+            }
+          }
+        )
+
+        yield put(pedidosFetchSuccess(newAr));
+    }catch(error){
+      console.log(error);
     }
-      
 }
 
 // export function* deletePedidoByID(action){
@@ -191,6 +219,10 @@ export function* updatePedido() {
   yield takeLatest('UPDATE_PEDIDO', updateById);
 }
 
+export function* setPedidoOk() {
+  yield takeEvery('SET_PEDIDO_OK', setPedidoOkById);
+}
+
 export function* pedidoSagas() {
     yield all([
       call(pedidoAddStart), 
@@ -198,6 +230,7 @@ export function* pedidoSagas() {
       call(deleteAllPedidos), 
       call(getLastID),
       call(deletePedido),
-      call(updatePedido)
+      call(updatePedido),
+      call(setPedidoOk)
     ])
 }

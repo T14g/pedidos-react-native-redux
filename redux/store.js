@@ -9,7 +9,7 @@ import  createSagaMiddleware from 'redux-saga';
 const sagaMilddeware = createSagaMiddleware();
 const logger = createLogger();
 
-const middlewares = [ sagaMilddeware, logger];
+const middlewares = [ sagaMilddeware];
 const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 sagaMilddeware.run(rootSaga);

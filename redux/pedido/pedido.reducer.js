@@ -1,5 +1,3 @@
-import PedidoActionTypes from './pedido.types';
-
 const INITIAL_STATE = {
     pedidos : [],
     total: 0,

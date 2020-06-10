@@ -6,7 +6,7 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Modal, TextI
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MonoText } from '../components/StyledText';
-import { pedidosFetchStart, getLastID, deletePedido, updatePedido } from '../redux/pedido/pedido.actions';
+import { pedidosFetchStart, getLastID, deletePedido, updatePedido, setPedidoOk } from '../redux/pedido/pedido.actions';
 // import { getLastID } from '../redux/pedido/pedido-saga';
 
 class HomeScreen extends React.Component {
@@ -26,7 +26,7 @@ class HomeScreen extends React.Component {
 
 
   render(){
-    let { pedidos, deletePedidoByID, updatePedidoNow } = this.props;
+    let { pedidos, deletePedidoByID, updatePedidoNow, conluirPedido } = this.props;
     const { modalVisible,isEditing } = this.state;
     pedidos = pedidos ? pedidos : [];
 
@@ -87,6 +87,13 @@ class HomeScreen extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
+
+             <TouchableOpacity  
+                onPress={() => conluirPedido(id)}
+                style={styles.greenBtn}
+                >
+                  <Text style={styles.buttonText2}>Concluir</Text>
+                </TouchableOpacity>
             </View>
             )
           })
@@ -297,6 +304,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
   },
+  greenBtn: {
+    backgroundColor: 'green',
+    width: '100%',
+    height: 40,
+    padding: 10,
+  },
   pedidoTEXT: {
     paddingTop: 15,
     paddingBottom: 15,
@@ -312,7 +325,8 @@ const  mapDispatchToProps = (dispatch) => ({
   fetchPedidos : () => dispatch(pedidosFetchStart()),
   getLastID : () => dispatch(getLastID()),
   deletePedidoByID : (id) => dispatch(deletePedido(id)),
-  updatePedidoNow : (pedido) => dispatch(updatePedido(pedido))
+  updatePedidoNow : (pedido) => dispatch(updatePedido(pedido)),
+  conluirPedido: (id) => dispatch(setPedidoOk(id))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
